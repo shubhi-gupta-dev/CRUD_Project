@@ -1,0 +1,143 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Home {% endblock title %}
+{% block main_content %} 
+
+<div class="hero">
+  
+    <!-- for header part -->
+    <header>
+
+        <div class="logosec">
+            <div class="logo">TechTrek</div>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
+                class="icn menuicn" 
+                id="menuicn" 
+                alt="menu-icon">
+        </div>
+
+
+        <div class="message">
+            <div class="circle"></div>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png" 
+                 class="icn" 
+                 alt="">
+            <div class="dp">
+              <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                    class="dpicn" 
+                    alt="dp">
+              </div>
+        </div>
+
+    </header>
+
+      <div class="main-container">
+        <div class="navcontainer">
+              <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                            class="nav-img" 
+                            alt="dashboard">
+                        <h5>Dashboard</h5>
+                    </div>
+
+                    <div class="option2 nav-option">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
+                            class="nav-img" 
+                            alt="articles">
+                        <h5>Profile</h5>
+                    </div>
+
+                    <div class="option2 nav-option">
+                      <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
+                          class="nav-img" 
+                          alt="articles">
+                      <h5><a href="{% url 'add-product' %}" class="text-decoration-none text-dark">Add Product</a></h5>
+                  </div>
+
+
+                    <div class="nav-option option5">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183323/10.png"
+                            class="nav-img" 
+                            alt="blog">
+                        <h5>View Orders</h5>
+                    </div>
+
+                    <div class="nav-option option6">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/4.png"
+                            class="nav-img" 
+                            alt="settings">
+                        <h5> Settings</h5>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                            class="nav-img" 
+                            alt="logout">
+                        <h5>Logout</h5>
+                    </div>
+
+                </div>
+              </nav>
+        </div>
+        <div class="main">
+        
+              <!-- table -->
+              <div class="row justify-content-around mt-3">
+                <div class="col-sm-12 text-center">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                              <th scope="col" class="py-3">Id</th>
+                              <th scope="col" class="py-3">Product Name</th>
+                              <th scope="col" class="py-3">Product Description</th>
+                              <th scope="col" class="py-3">Price</th>
+                              <th scope="col" class="py-3">Photo</th>
+                              <th scope="col" class="py-3">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+        
+                            {% for product in prodata %}
+                            <tr class="w-100 h-100 border">
+                              <th scope="row" class="px-4">{{forloop.counter}}</th>
+                              <td class="w-25">{{product.pname}}</td>
+                              <td class="w-50">{{product.pdesc}}</td>
+                              <td>₹{{product.price}}</td>
+                              <td><img src={{product.photo.url}} style="width:60px;height:50px"></td>
+                              <td class="d-flex align-items-center justify-content-center py-3">
+                                <!-- delete btn -->
+                                <table>
+                                  <tr>
+                                    <td>
+                                      <form action="{% url 'delete-product' %}" method="POST">
+                                        {% csrf_token %}
+                                         <input type="hidden" name="id" value={{product.id}} />
+                                         <input type="submit" value = "Delete" class="btn btn-danger mx-1"/>
+                                      </form>
+                                    </td>
+                                    <td> 
+                                      <a href="{% url 'edit-product' product.id %}" class="btn btn-info mx-1">Edit</a>
+                                    </td> 
+        
+                                  </tr>
+                                </table>
+        
+                                <!-- delete btn -->
+                               
+                              </td>
+        
+                            </tr>
+                            {% endfor %}
+                           
+                          </tbody>
+                      </table>
+        
+                </div>
+           </div>
+        </div>
+      </div>
+
+    </div>
+{% endblock main_content %}
